@@ -63,10 +63,7 @@ const Snake = () => {
 
   const gameOver = () => {
     setSpeed(null);
-  }
-
-  const eatFood = () => {
-    setFood([[Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]])
+    console.log("game over--")
   }
 
   const gameLoop = () => {
@@ -83,8 +80,11 @@ const Snake = () => {
     else if(snakeCopy[0][1] > row - 1) snakeCopy[0][1] = 0;
 
     // *****************------ penetrate the wall ------*****************
-    for(let i = 1; i < snakeCopy.lenght - 1; i++)
-        if(snakeCopy[i][0] === snakeCopy[0][0] && snakeCopy[i][1] === snakeCopy[0][1]) gameOver();
+
+    // bite itself *************************************
+    if(_.some(snake, (el, idx) => el[0] === snakeCopy[0][0] && el[1] === snakeCopy[0][1])) gameOver();
+    
+    // ************************************* bite itself *************************************
 
     // To eat food **************************
     const ateFood = food[0][0] === snakeCopy[0][0] && food[0][1] === snakeCopy[0][1]
