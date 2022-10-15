@@ -1,30 +1,16 @@
-import { Box } from "@mui/material"
+import { Box, styled } from "@mui/material"
 
-const styles = {
-    road: theme => ({
-        width: "25px",
-        height: "25px",
-        backgroundColor: "#FFF",
-        border: "0.4px solid silver",
-    }),
-    snake: theme => ({
-        width: "25px",
-        height: "25px",
-        backgroundColor: "#FF33F0",
-        border: "0.4px solid #FF33F0"
-        // border: "0.4px solid silver",
-    }),
-    food: theme => ({
-        width: "25px",
-        height: "25px",
-        backgroundColor: "#FF3333",
-        // border: "0.4px solid silver",
-    })
-}
+const RoadOrWhat = styled(Box)(({ theme, food, snake }) => ({
+  width: '25px',
+  height: '25px',
+  border: snake ? '0.4px solid #FF33F0' : '0.4px solid silver',
+  backgroundColor: food ? "#FF3333" : snake ? "#FF33F0" : "#FFF",
+}))
 
 const Road = props => {
+  const { snake, food } = props;
   return (
-    <Box sx={props.food ? styles.food : props.snake ? styles.snake : styles.road} />
+    <RoadOrWhat food={food} snake={snake} />
   )
 }
 
