@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { BoardSection, XSection } from "./ContainerStyle";
 import { ACTIONS_TYPE } from "./Action_Type";
-import { styles } from "./ContainerStyle";
+import { useState, useEffect } from "react";
 import useGameLoop from "./GameLoop";
-import { Box } from "@mui/material"
 import Road from "./Road";
 import _ from "lodash";
 
@@ -75,9 +74,9 @@ const Snake = () => {
 
     // penetrate the wall **************************
     if(snakeCopy[0][0] < 0) snakeCopy[0][0] = column - 1;
-    else if(snakeCopy[0][0] > column - 1) snakeCopy[0][0] = 0;
-    else if(snakeCopy[0][1] < 0) snakeCopy[0][1] = row - 1;
-    else if(snakeCopy[0][1] > row - 1) snakeCopy[0][1] = 0;
+    if(snakeCopy[0][0] > column - 1) snakeCopy[0][0] = 0;
+    if(snakeCopy[0][1] < 0) snakeCopy[0][1] = row - 1;
+    if(snakeCopy[0][1] > row - 1) snakeCopy[0][1] = 0;
 
     // *****************------ penetrate the wall ------*****************
 
@@ -102,10 +101,10 @@ const Snake = () => {
   useGameLoop(gameLoop, speed);
 
   return (
-    <Box sx={styles.boardSection}>
+    <BoardSection>
         {_.map(YAxis, (y, yIdx) => {
             return(
-                <Box key={yIdx} sx={styles.XSection}>
+                <XSection key={yIdx}>
                     {_.map(XAxis, (x, xIdx) => {
                         const isSnake = _.some(snake, (el, idx) => (el[0] === xIdx && el[1] === yIdx));
                         const isFood = _.some(food, (el, idx) => (el[0] === xIdx && el[1] === yIdx));
@@ -113,10 +112,10 @@ const Snake = () => {
                             <Road key={xIdx} food={isFood} snake={isSnake} />
                         )
                     })}
-                </Box>
+                </XSection>
             )
         } )}
-    </Box>
+    </BoardSection>
   )
 }
 
